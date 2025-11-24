@@ -4,170 +4,225 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>2025 조직문화 행사 안내</title>
+  <title>조직문화 행사 안내</title>
   <style>
     :root {
-      --brand: #2e7d32;       /* 포인트 색상 (녹색 계열) */
-      --text: #222;
-      --muted: #666;
+      --brand: #2e7d32;  /* 포인트 색상(녹색) */
       --bg: #f8fafc;
       --card: #ffffff;
       --border: #e5e7eb;
+      --text: #222;
+      --muted: #666;
     }
     * { box-sizing: border-box; }
-    body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, sans-serif;
-      margin: 0; color: var(--text); background: var(--bg);
-    }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans KR, sans-serif; margin:0; color:var(--text); background:var(--bg); }
     header {
       background: linear-gradient(90deg, #1b5e20, #2e7d32);
-      color: #fff; padding: 28px 20px;
+      color:#fff; padding:28px 20px;
     }
-    .container { max-width: 980px; margin: 0 auto; padding: 20px; }
-    .page-title { margin: 0; font-size: 28px; }
-    .page-sub { margin: 6px 0 0; color: #e6f5ea; }
+    .container { max-width: 960px; margin:0 auto; padding:20px; }
+    .title { margin:0; font-size:28px; }
+    .sub { margin:6px 0 0; color:#e6f5ea; }
 
-    .info-bar {
-      display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 12px; margin-top: 16px;
-    }
-    .info-item { background: rgba(255,255,255,0.1); padding: 12px; border-radius: 10px; }
-
+    /* 카드/단계 공통 */
     .card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 12px; padding: 18px; margin-bottom: 16px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      background: var(--card); border:1px solid var(--border);
+      border-radius: 14px; padding: 22px; margin: 16px 0;
+      box-shadow: 0 1px 2px rgba(0,0,0,.05);
     }
-    .card h3 { margin: 0 0 6px; font-size: 18px; }
-    .card .meta { color: var(--muted); font-size: 14px; margin-bottom: 10px; }
-    .grid {
-      display: grid; grid-template-columns: 1fr; gap: 12px;
-    }
-    @media (min-width: 720px) {
-      .grid { grid-template-columns: 1.5fr 1fr; }
-    }
+    .card h2, .card h1 { margin-top:0; }
     .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--brand); color: #fff; padding: 10px 14px;
-      border: none; border-radius: 10px; text-decoration: none; cursor: pointer;
-      font-weight: 600;
+      display:inline-flex; align-items:center; gap:8px;
+      background: var(--brand); color:#fff; padding:12px 16px;
+      border:none; border-radius: 10px; font-weight:600; cursor:pointer; text-decoration:none;
     }
     .btn:hover { filter: brightness(1.05); }
-    .btn.secondary { background: #1565c0; }
-    .legend { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
-    footer { text-align: center; color: var(--muted); font-size: 13px; padding: 24px 20px; }
-    .table-wrap { overflow-x: auto; }
-    table {
-      width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden;
+    .btn.secondary { background:#1565c0; }
+    .muted { color: var(--muted); }
+
+    /* 단계 전환 */
+    .step { display:none; }
+    .step.is-active { display:block; animation: fadeIn .22s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to { opacity:1; transform: translateY(0);} }
+
+    /* 진행 표시줄(선택사항) */
+    .progress {
+      display:flex; gap:10px; margin: 8px 0 0;
+      flex-wrap:wrap;
     }
-    th, td { padding: 12px; border-bottom: 1px solid var(--border); text-align: left; }
-    th { background: #f3f4f6; font-weight: 700; }
+    .dot {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border:1px solid var(--border); border-radius:999px;
+      background:#fff; font-size:14px; color:#222;
+    }
+    .dot.active { border-color:#c8e6c9; background:#e8f5e9; color:#1b5e20; }
+
+    /* 시간표 테이블 */
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse: collapse; background:#fff; border-radius: 12px; overflow:hidden; }
+    th, td { padding:12px; border-bottom:1px solid var(--border); text-align:left; }
+    th { background:#f3f4f6; font-weight:700; }
     tr:last-child td { border-bottom: none; }
-    .tag {
-      display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px;
-      background: #e8f5e9; color: #1b5e20; border: 1px solid #c8e6c9;
-    }
+
+    footer { text-align:center; color:var(--muted); font-size:13px; padding:24px 20px; }
   </style>
 </head>
 <body>
   <header>
     <div class="container">
-      <h1 class="page-title">2025 조직문화 행사 안내</h1>
-      <p class="page-sub">세대별 감성 특징을 반영한 친근한 분위기의 사내 행사입니다.</p>
-
-      <div class="info-bar">
-        <div class="info-item"><strong>일시</strong><br>2025-12-10(수) 13:00–18:00</div>
-        <div class="info-item"><strong>장소</strong><br>HQ 2층 대강당 & 브레이크아웃룸</div>
-        <div class="info-item"><strong>주관</strong><br>HS 조직문화팀</div>
+      <h1 class="title">2025 조직문화 행사</h1>
+      <p class="sub">세대별 감성 특징을 반영한 친근한 분위기로 함께해요.</p>
+      <div class="progress" aria-label="진행 단계">
+        <span class="dot" id="dot-1">1. 환영합니다</span>
+        <span class="dot" id="dot-2">2. 초대 메시지</span>
+        <span class="dot" id="dot-3">3. 자세히 알아보기</span>
+        <span class="dot" id="dot-4">4. 전체 시간표</span>
       </div>
     </div>
   </header>
 
   <main class="container">
-    <div class="grid">
-      <section class="card">
-        <h3>메인 시간표</h3>
-        <p class="legend">현장에서 변동 가능성이 있으니, 최신 내용은 상단 공지를 확인해 주세요.</p>
-        <div class="table-wrap">
-          <table aria-label="행사 시간표">
-            <thead>
-              <tr>
-                <th style="width:120px;">시간</th>
-                <th>세션</th>
-                <th style="width:160px;">발표자</th>
-                <th style="width:160px;">상세</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>13:00–13:20</td>
-                <td>오프닝 & 웰컴</td>
-                <td>ㅇㅇㅇ 사원</td>
-                <td>
-                  sessions.html#session-1상세 내용 보러 가기</a>
-                </td>
-              </tr>
-              <tr>
-                <td>13:20–14:00</td>
-                <td>조직문화 방향성 2026</td>
-                <td>ㅇㅇㅇ 팀장</td>
-                <td>
-                  sessions.html#session-2상세 내용 보러 가기</a>
-                </td>
-              </tr>
-              <tr>
-                <td>14:10–15:00</td>
-                <td>세대 공감 커뮤니케이션 워크숍</td>
-                <td>외부 퍼실리테이터</td>
-                <td>
-                  sessions.html#session-3상세 내용 보러 가기</a>
-                </td>
-              </tr>
-              <tr>
-                <td>15:10–16:00</td>
-                <td>베스트 프랙티스 라이트닝 토크</td>
-                <td>사내 발표자 4명</td>
-                <td>
-                  sessions.html#session-4상세 내용 보러 가기</a>
-                </td>
-              </tr>
-              <tr>
-                <td>16:10–17:30</td>
-                <td>패널 Q&A: 일하는 방식 혁신</td>
-                <td>패널 5명</td>
-                <td>
-                  sessions.html#session-5상세 내용 보러 가기</a>
-                </td>
-              </tr>
-              <tr>
-                <td>17:30–18:00</td>
-                <td>클로징 & 네트워킹</td>
-                <td>전체</td>
-                <td>
-                  sessions.html#session-6상세 내용 보러 가기</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+    <!-- STEP 1 -->
+    <section id="step1" class="step is-active card">
+      <h1 tabindex="-1">환영합니다! 👋</h1>
+      <p class="muted">이번 조직문화 행사 페이지에 오신 것을 진심으로 환영합니다.</p>
+      <button class="btn" data-next="#step2" aria-label="다음 단계로 이동">다음으로</button>
+    </section>
 
-      <aside class="card">
-        <h3>참가 안내</h3>
-        <p class="meta">등록 마감: 2025-12-05(금) 18:00</p>
-        <ul>
-          <li>사내 포털에서 사전 신청해주세요.</li>
-          <li><span class="tag">현장</span> HQ 2층 대강당 (좌석 선착순)</li>
-          <li><span class="tag">온라인</span> 라이브 스트리밍 링크 행사 전 공지</li>
-        </ul>
-        sessions.html세션 전체 보기</a>
-      </aside>
-    </div>
+    <!-- STEP 2 -->
+    <section id="step2" class="step card">
+      <h2 tabindex="-1">조직문화 행사에 초대합니다!</h2>
+      <p>일시: 2025-12-10(수) 13:00–18:00 · 장소: HQ 2층 대강당</p>
+      <p class="muted">우리의 가치와 행동원칙을 함께 나누고 공감하는 시간으로 꾸며집니다.</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" data-prev="#step1">이전</button>
+        <button class="btn" data-next="#step3">자세히 알아보기</button>
+        <!-- 바로 시간표로 건너뛰기 링크(선택) -->
+        <a class="btn secondary" href="#schedule" aria-label="시간표로 바로 이동P 3 -->
+    <section id="step3" class="step card">
+      <h2 tabindex="-1">자세히 알아보기</h2>
+      <ul>
+        <li>주요 세션: 방향성 발표, 세대 공감 워크숍, 라이트닝 토크, 패널 Q&A</li>
+        <li>참가 안내: 사내 포털 사전 신청, 현장/온라인 병행</li>
+      </ul>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" data-prev="#step2">이전</button>
+        <button class="btn" data-next="#schedule">전체 시간표 보기</button>
+      </div>
+    </section>
+
+    <!-- STEP 4: 전체 시간표 -->
+    <section id="schedule" class="step card">
+      <h2 tabindex="-1">전체 시간표</h2>
+      <p class="muted">현장에서 약간의 변동이 있을 수 있습니다.</p>
+      <div class="table-wrap">
+        <table aria-label="행사 시간표">
+          <thead>
+            <tr>
+              <th style="width:120px;">시간</th>
+              <th>세션</th>
+              <th style="width:160px;">발표자</th>
+              <th style="width:160px;">비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>13:00–13:20</td>
+              <td>오프닝 & 웰컴</td>
+              <td>ㅇㅇㅇ 사원</td>
+              <td>대강당</td>
+            </tr>
+            <tr>
+              <td>13:20–14:00</td>
+              <td>조직문화 방향성 2026</td>
+              <td>ㅇㅇㅇ 팀장</td>
+              <td>대강당</td>
+            </tr>
+            <tr>
+              <td>14:10–15:00</td>
+              <td>세대 공감 커뮤니케이션 워크숍</td>
+              <td>외부 퍼실리테이터</td>
+              <td>브레이크아웃룸</td>
+            </tr>
+            <tr>
+              <td>15:10–16:00</td>
+              <td>베스트 프랙티스 라이트닝 토크</td>
+              <td>사내 발표자 4명</td>
+              <td>대강당</td>
+            </tr>
+            <tr>
+              <td>16:10–17:30</td>
+              <td>패널 Q&A: 일하는 방식 혁신</td>
+              <td>패널 5명</td>
+              <td>대강당</td>
+            </tr>
+            <tr>
+              <td>17:30–18:00</td>
+              <td>클로징 & 네트워킹</td>
+              <td>전체</td>
+              <td>로비</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+        <button class="btn" data-prev="#step3">이전</button>
+        <a class으로</a>
+      </div>
+    </section>
   </main>
 
   <footer>
     © 2025 HS 조직문화팀 · 문의: culture@company.com
   </footer>
+
+  <script>
+    // 단계 전환 로직
+    function activate(selector) {
+      document.querySelectorAll('.step').forEach(el => el.classList.remove('is-active'));
+      const target = document.querySelector(selector);
+      if (!target) return;
+      target.classList.add('is-active');
+
+      // 진행 표시 업데이트
+      const map = { '#step1': 1, '#step2': 2, '#step3': 3, '#schedule': 4 };
+      const idx = map[selector] || 1;
+      [1,2,3,4].forEach(n => {
+        const dot = document.getElementById('dot-'+n);
+        if (dot) dot.classList.toggle('active', n <= idx);
+      });
+
+      // 포커스 이동(접근성)
+      const focusableHeading = target.querySelector('h1, h2');
+      if (focusableHeading) {
+        focusableHeading.focus({ preventScroll: false });
+      }
+
+      // URL 해시 반영
+      const id = selector.replace('#','');
+      if (location.hash !== '#'+id) {
+        history.replaceState(null, '', '#'+id);
+      }
+    }
+
+    function bindNav() {
+      document.querySelectorAll('[data-next]').forEach(btn => {
+        btn.addEventListener('click', () => activate(btn.dataset.next));
+      });
+      document.querySelectorAll('[data-prev]').forEach(btn => {
+        btn.addEventListener('click', () => activate(btn.dataset.prev));
+      });
+      window.addEventListener('hashchange', () => {
+        const h = location.hash || '#step1';
+        activate(h);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      bindNav();
+      const initial = location.hash || '#step1';
+      activate(initial);
+    });
+  </script>
 </body>
 </html>
-
